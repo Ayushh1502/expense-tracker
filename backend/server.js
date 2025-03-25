@@ -21,6 +21,10 @@ app.use(express.json())
 
 connectDB()
 
+app.use("/health",(req,res)=>{
+    res.send("healthy")
+})
+
 app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/income",incomeRoutes)
 app.use("/api/v1/expense",expenseRoutes)
