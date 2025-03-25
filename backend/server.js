@@ -21,7 +21,7 @@ app.use(express.json())
 
 connectDB()
 
-app.use("/health",(req,res)=>{
+app.get("/health",(req,res)=>{
     res.send("healthy")
 })
 
