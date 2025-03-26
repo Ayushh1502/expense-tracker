@@ -1,9 +1,13 @@
-import react, { useState } from "react"
+import react, { useContext, useState } from "react"
 import AuthLayout from "../../components/layouts/AuthLayout"
 import { useNavigate , Link } from "react-router-dom"
 import Input from "../../components/inputs/input"
 import { validateEmail } from "../../Utils/helper"
 import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector"
+import axiosInstance from "../../Utils/axiosInstance"
+import { API_PATHS } from "../../Utils/apiPaths"
+import { UserContext } from "../../context/userContext"
+import uploadImage from "../../Utils/uploadImage"
 
 const SignUp = () => {
 
@@ -11,6 +15,8 @@ const SignUp = () => {
     const [fullName , setFullName] = useState("")
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
+
+    const {updateUser} = useContext(UserContext)
 
     const [error , setError] = useState(null)
 
@@ -39,6 +45,37 @@ const SignUp = () => {
         setError("")
 
         // sign up API call
+
+        try {
+            // upload profile pic if present
+            if(profilePic){
+                const imgUploadRes = await uploadImage(profilePic)
+                profileImageUrl =   imgUploadRes.imageUrl || ""
+                console.log(profileImageUrl)
+            }
+            const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+                fullName,
+                email,
+                password,
+                profileImageUrl
+            })
+
+            const {token , user} = response.data
+
+            if(token){
+                localStorage.setItem("token",token)
+                updateUser(user)
+                navigate("/dashboard")
+            }
+        } catch (err) {
+            if(err.response && err.response.data.message){
+                setError(err.response.data.message)
+            }
+            else{
+                console.log(err)
+                setError("Something went wrong. please try again.")
+            }
+        }
     }
 
     return (
