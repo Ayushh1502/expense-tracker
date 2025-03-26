@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://expense-tracker-ayush.up.railway.app"
-export const BASE_URL = "http://localhost:8000"
+export const BASE_URL = "https://expense-tracker-ayush.up.railway.app"
+// export const BASE_URL = "http://localhost:8000"
 
 // utils/apiPath.js
 
