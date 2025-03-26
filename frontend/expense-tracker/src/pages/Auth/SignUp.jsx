@@ -6,7 +6,7 @@ import { validateEmail } from "../../Utils/helper"
 import ProfilePhotoSelector from "../../components/inputs/ProfilePhotoSelector"
 import axiosInstance from "../../Utils/axiosInstance"
 import { API_PATHS } from "../../Utils/apiPaths"
-import { UserContext } from "../../context/userContext"
+import { UserContext } from "../../context/UserContext"
 import uploadImage from "../../Utils/uploadImage"
 
 const SignUp = () => {
