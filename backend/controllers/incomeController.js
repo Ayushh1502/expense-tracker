@@ -53,24 +53,33 @@ exports.deleteIncome = async(req,res)=>{
 }
 
 // download excel
-exports.downloadIncomeExcel = async(req,res)=>{
-    const userId = req.user.id
+exports.downloadIncomeExcel = async (req, res) => {
+    const userId = req.user.id;
     try {
-        const income = await Income.find({userId}).sort({date : -1})
+        const income = await Income.find({ userId }).sort({ date: -1 });
 
-        const data = income.map((item)=> ({
-            Source : item.source,
-            Amount : item.amount,
-            Date : item.date
-        }))
+        const data = income.map((item) => ({
+            Source: item.source,
+            Amount: item.amount,
+            Date: item.date,
+        }));
 
-        const wb = xlsx.utils.book_new()
-        const ws = xlsx.utils.json_to_sheet(data)
-        xlsx.utils.book_append_sheet(wb, ws, "Income")
-        xlsx.writeFile(wb, "income_details.xlsx")
-        res.download("income_details.xlsx")
+        const wb = xlsx.utils.book_new();
+        const ws = xlsx.utils.json_to_sheet(data);
+        xlsx.utils.book_append_sheet(wb, ws, "Income");
+
+        // Generate the Excel file as a buffer (without saving it)
+        const buffer = xlsx.write(wb, { type: "buffer", bookType: "xlsx" });
+
+        // Set headers for file download
+        res.setHeader("Content-Disposition", "attachment; filename=income_details.xlsx");
+        res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+        // Send the file as a response
+        res.send(buffer);
 
     } catch (err) {
-        res.status(500).json({message : "Server Error"})
+        console.error("Server Error:", err);
+        res.status(500).json({ message: "Server Error" });
     }
-}
+};
