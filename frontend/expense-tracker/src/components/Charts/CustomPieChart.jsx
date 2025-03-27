@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 
-const CustomPiChart = ({data, label, totalAmount, colors, showTextAnchor}) => {
+const CustomPieChart = ({data, label, totalAmount, colors, showTextAnchor}) => {
 
     return <ResponsiveContainer width="100%" height={380}>
         <PieChart>
@@ -27,6 +27,7 @@ const CustomPiChart = ({data, label, totalAmount, colors, showTextAnchor}) => {
                 labelLine={false}
             >
                 {data.map((entry, index) => (
+                    
                     <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                 ))}
             </Pie>
@@ -63,4 +64,4 @@ const CustomPiChart = ({data, label, totalAmount, colors, showTextAnchor}) => {
     </ResponsiveContainer>
 }
 
-export default CustomPiChart;
+export default CustomPieChart;

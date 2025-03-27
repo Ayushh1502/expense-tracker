@@ -7,7 +7,7 @@ import {
 } from "react-icons/lu";
 import { addThousandsSeparator } from "../../Utils/helper";
 
-const TransactionInfoCard = ({ title, icon, amount, date, type, hideDeleteBtn }) => {
+const TransactionInfoCard = ({ title, icon, amount, date, type, hideDeleteBtn , onDelete }) => {
 
     const getAmountStyles = () => {
         if(type === "income"){

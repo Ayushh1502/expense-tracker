@@ -1,5 +1,5 @@
 import React from "react";
-import CustomPiChart from "../Charts/CustomPiChart";
+import CustomPieChart from "../Charts/CustomPieChart";
 
 const COLORS = ["#875CF5","#FA2C37","#FF6900"]
 
@@ -17,7 +17,7 @@ const FinananceOverview = ({ totalBalance, totalIncome, totalExpense }) => {
             <h5 className="text-lg">Finanance Overview</h5>
         </div>
 
-        <CustomPiChart
+        <CustomPieChart
         data={balanceData}
         label="Total Balance"
         totalAmount={`₹${totalBalance}`}
